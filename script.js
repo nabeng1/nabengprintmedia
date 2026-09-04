@@ -1,16 +1,14 @@
+
 const supabaseUrl =
-"https://isuulpqkrpkcysjnulbm.supabase.co";
+    "https://isuulpqkrpkcysjnulbm.supabase.co";
 
 const supabaseKey =
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzdXVscHFrcnBrY3lzam51bGJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0OTEwMzIsImV4cCI6MjEwNDA2NzAzMn0.UGiNXfIVIoYR9W6HCB6Ya8TaiN3wJAbiji-1WPBKcm8
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzdXVscHFrcnBrY3lzam51bGJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0OTEwMzIsImV4cCI6MjEwNDA2NzAzMn0.UGiNXfIVIoYR9W6HCB6Ya8TaiN3wJAbiji-1WPBKcm8";
 
-var supabaseClient =
-window.supabase.createClient(
+const supabase = window.supabase.createClient(
     supabaseUrl,
     supabaseKey
 );
-
-
 const header = document.getElementById("siteHeader");
 const menuToggle = document.getElementById("menuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
