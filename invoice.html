@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Generator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Georgia&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#6b1420;
+    --maroon-dark:#4d0e17;
+    --orange:#e8501f;
+    --paper:#ffffff;
+    --ink:#1c1c1c;
+    --ink-soft:#5a5a5a;
+    --line:#d9d0c9;
+    --panel:#f1efe9;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:var(--panel);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .app{
+    display:grid;
+    grid-template-columns:400px 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- FORM SIDE ---------- */
+  .form-panel{
+    background:#fff;
+    border-right:1px solid var(--line);
+    padding:32px 28px 80px;
+    overflow-y:auto;
+    max-height:100vh;
+  }
+
+  .brand{
+    font-family:'Playfair Display', serif;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin:0 0 4px;
+  }
+
+  .brand-sub{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 28px;
+  }
+
+  fieldset{
+    border:none;
+    padding:0;
+    margin:0 0 26px;
+  }
+
+  legend{
+    font-size:11px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--maroon);
+    padding:0 0 10px;
+    width:100%;
+    border-bottom:1px solid var(--line);
+    margin-bottom:14px;
+  }
+
+  .field{
+    margin-bottom:12px;
+  }
+
+  .field label{
+    display:block;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-bottom:4px;
+  }
+
+  .row2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  input, textarea, select{
+    width:100%;
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    padding:8px 10px;
+    border:1px solid var(--line);
+    border-radius:5px;
+    background:var(--panel);
+    color:var(--ink);
+  }
+
+  input:focus, textarea:focus, select:focus{
+    outline:none;
+    border-color:var(--orange);
+    background:#fff;
+  }
+
+  textarea{
+    resize:vertical;
+    min-height:50px;
+    font-family:'Inter', sans-serif;
+  }
+
+  .logo-upload{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .logo-preview{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--panel);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    color:var(--ink-soft);
+    overflow:hidden;
+    flex-shrink:0;
+  }
+
+  .logo-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .file-btn{
+    font-size:12.5px;
+    color:var(--maroon);
+    cursor:pointer;
+    text-decoration:underline;
+  }
+
+  .item-row{
+    display:grid;
+    grid-template-columns:44px 1fr 66px 24px;
+    gap:6px;
+    align-items:end;
+    margin-bottom:8px;
+  }
+
+  .item-row label{
+    font-size:10.5px;
+  }
+
+  .remove-item{
+    background:none;
+    border:none;
+    color:var(--maroon);
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+    padding:6px 0;
+  }
+
+  .remove-item:disabled{
+    opacity:0.25;
+    cursor:not-allowed;
+  }
+
+  .add-item{
+    background:#fdece6;
+    color:var(--orange);
+    border:1px dashed var(--orange);
+    border-radius:5px;
+    padding:8px 10px;
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+    width:100%;
+    margin-top:4px;
+  }
+
+  .add-item:hover{
+    background:#fbdccf;
+  }
+
+  .pdf-btn{
+    position:sticky;
+    bottom:0;
+    width:100%;
+    background:var(--maroon);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:13px;
+    font-size:14.5px;
+    font-weight:600;
+    letter-spacing:0.01em;
+    cursor:pointer;
+    margin-top:8px;
+  }
+
+  .pdf-btn:hover{
+    background:var(--maroon-dark);
+  }
+
+  /* ---------- PREVIEW SIDE ---------- */
+  .preview-panel{
+    padding:40px;
+    overflow-y:auto;
+    max-height:100vh;
+    display:flex;
+    justify-content:center;
+  }
+
+  .sheet{
+    background:var(--paper);
+    width:100%;
+    max-width:680px;
+    min-height:900px;
+    box-shadow:0 1px 3px rgba(27,36,48,0.08), 0 12px 32px rgba(27,36,48,0.12);
+    border:10px solid var(--ink);
+    font-family:'Georgia', serif;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* header */
+  .head{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:22px 28px 14px;
+  }
+
+  .logo-circle{
+    width:78px;
+    height:78px;
+    border-radius:50%;
+    border:2px solid var(--maroon);
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:var(--panel);
+  }
+
+  .logo-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .logo-circle span{
+    font-family:'Playfair Display', serif;
+    font-size:11px;
+    color:var(--maroon);
+    text-align:center;
+  }
+
+  .head-text{
+    flex:1;
+    text-align:center;
+    margin-right:78px; /* balance the logo width so text centers on the page */
+  }
+
+  .head-text .biz-name{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:34px;
+    color:var(--maroon);
+    letter-spacing:0.01em;
+    margin:0 0 4px;
+    line-height:1.05;
+  }
+
+  .head-text .biz-line{
+    font-size:14px;
+    color:var(--ink);
+    margin:2px 0;
+  }
+
+  .invoice-band{
+    background:var(--maroon);
+    color:#fff;
+    text-align:center;
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:26px;
+    letter-spacing:0.06em;
+    padding:8px 0;
+  }
+
+  .details{
+    padding:20px 28px 6px;
+    font-size:15px;
+  }
+
+  .dline{
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+    margin-bottom:12px;
+  }
+
+  .dline .dlabel{
+    white-space:nowrap;
+    font-weight:600;
+  }
+
+  .dline .dval{
+    flex:1;
+    border-bottom:1px dotted var(--ink);
+    min-height:18px;
+    padding-bottom:1px;
+  }
+
+  .details-row{
+    display:flex;
+    gap:24px;
+  }
+
+  .details-row .dline{
+    flex:1;
+  }
+
+  table.items{
+    width:calc(100% - 56px);
+    margin:14px 28px 0;
+    border-collapse:collapse;
+    border:1px solid var(--maroon);
+  }
+
+  table.items thead th{
+    background:var(--orange);
+    color:#fff;
+    font-family:'Inter', sans-serif;
+    font-weight:700;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    padding:8px 6px;
+    border:1px solid var(--maroon);
+  }
+
+  table.items th.qty{ width:14%; }
+  table.items th.desc{ width:46%; text-align:left; padding-left:12px; }
+  table.items th.rate{ width:20%; }
+  table.items th.amount{ width:20%; }
+
+  table.items tbody td{
+    border:1px solid var(--maroon);
+    padding:9px 8px;
+    font-size:14px;
+    height:20px;
+  }
+
+  table.items tbody td.qty-cell, table.items tbody td.num{
+    text-align:center;
+  }
+
+  table.items tbody td.desc-cell{
+    text-align:left;
+  }
+
+  .total-wrap{
+    display:flex;
+    justify-content:flex-end;
+    margin:14px 28px 0;
+  }
+
+  .total-box{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  .total-box .total-label{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--maroon);
+  }
+
+  .total-box .total-value{
+    border:1px solid var(--maroon);
+    min-width:140px;
+    padding:8px 14px;
+    text-align:right;
+    font-size:16px;
+    font-weight:700;
+  }
+
+  .spacer{ flex:1; }
+
+  .sign-row{
+    display:flex;
+    justify-content:space-between;
+    padding:0 28px;
+    margin-top:48px;
+    font-family:'Inter', sans-serif;
+  }
+
+  .sign-block{
+    text-align:center;
+    width:44%;
+  }
+
+  .sign-line{
+    border-bottom:1px dotted var(--ink);
+    height:20px;
+    margin-bottom:6px;
+  }
+
+  .sign-block .sign-label{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+
+  .footer-bar{
+    margin-top:26px;
+    height:34px;
+    background:linear-gradient(120deg, var(--maroon-dark) 0 50%, var(--orange) 50% 100%);
+    clip-path:polygon(0 0, 60% 0, 45% 100%, 0% 100%);
+    position:relative;
+  }
+
+  .footer-bar::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg, var(--maroon-dark) 0 45%, var(--orange) 45% 100%);
+    clip-path:none;
+  }
+
+  .footer-strip{
+    height:30px;
+    width:100%;
+    position:relative;
+    overflow:hidden;
+  }
+  .footer-strip .band{
+    position:absolute;
+    inset:0;
+    background:var(--orange);
+  }
+  .footer-strip .wedge{
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:55%;
+    background:var(--maroon-dark);
+    clip-path:polygon(0 0, 85% 0, 65% 100%, 0 100%);
+  }
+
+  .note-line{
+    font-family:'Inter', sans-serif;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    text-align:center;
+    padding:10px 20px 16px;
+  }
+
+
+  .auto-note{
+    display:block;
+    margin-top:4px;
+    font-size:10.5px;
+    color:var(--ink-soft);
+  }
+
+  .signature-image{
+    display:none;
+    max-width:150px;
+    max-height:54px;
+    object-fit:contain;
+    margin:0 auto -3px;
+  }
+
+  /* ---------- PRINT ---------- */
+  @media print{
+    body{background:#fff;}
+    .form-panel{display:none;}
+    .app{display:block;}
+    .preview-panel{
+      padding:0;
+      max-height:none;
+      overflow:visible;
+      display:block;
+    }
+    .sheet{
+      box-shadow:none;
+      max-width:100%;
+      min-height:0;
+      margin:0;
+    }
+  }
+
+  @media (max-width: 900px){
+    .app{grid-template-columns:1fr;}
+    .form-panel{border-right:none; border-bottom:1px solid var(--line); max-height:none;}
+    .preview-panel{max-height:none; padding:20px 10px;}
+    .head-text{margin-right:0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ FORM ============ -->
+  <div class="form-panel">
+    <p class="brand">Invoice Generator</p>
+    <p class="brand-sub">Fill in the details on the left. The invoice on the right updates as you type.</p>
+
+    <fieldset>
+      <legend>Business</legend>
+      <div class="field">
+        <label>Logo</label>
+        <div class="logo-upload">
+          <div class="logo-preview" id="logoPreview"><span>No logo</span></div>
+          <label class="file-btn">Upload logo<input type="file" id="logoInput" accept="image/*" style="display:none;"></label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="bizName">Business name</label>
+        <input id="bizName" value="Nabeng Print Media">
+      </div>
+      <div class="field">
+        <label for="bizAddress">Address</label>
+        <input id="bizAddress" value="Awutu Bawjiase, Near D/A Basic School">
+      </div>
+      <div class="field">
+        <label for="bizTel">Phone</label>
+        <input id="bizTel" value="0599581301 / 0201443088">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Client & invoice info</legend>
+      <div class="field">
+        <label for="clientName">Client's name</label>
+        <input id="clientName" placeholder="e.g. Thierry Asare">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="clientAddress">Address</label>
+          <input id="clientAddress">
+        </div>
+        <div class="field">
+          <label for="clientNumber">Number</label>
+          <input id="clientNumber">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="invDate">Date</label>
+          <input id="invDate" type="date">
+        </div>
+        <div class="field">
+          <label for="invNumber">Invoice no.</label>
+          <input id="invNumber" readonly title="Automatically generated invoice number">
+          <small class="auto-note">Automatically assigned when a new invoice is generated.</small>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Items</legend>
+      <div id="itemsWrap"></div>
+      <button type="button" class="add-item" id="addItemBtn">+ Add row</button>
+    </fieldset>
+
+
+    <fieldset>
+      <legend>Digital signature</legend>
+      <div class="field">
+        <label for="signatureInput">Upload signature image</label>
+        <div class="logo-upload">
+          <div class="logo-preview" id="signaturePreview"><span>No signature</span></div>
+          <label class="file-btn">Upload signature
+            <input type="file" id="signatureInput" accept="image/png,image/jpeg,image/webp" style="display:none;">
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="signatureName">Signatory name</label>
+        <input id="signatureName" placeholder="e.g. Manager">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Currency</legend>
+      <div class="field">
+        <label for="currency">Symbol / code shown in table</label>
+        <input id="currency" value="Ghc">
+      </div>
+    </fieldset>
+
+    <button class="pdf-btn" id="printBtn">⬇ Download Invoice PDF</button>
+  </div>
+
+  <!-- ============ PREVIEW ============ -->
+  <div class="preview-panel">
+    <div class="sheet" id="sheet">
+
+      <div class="head">
+        <div class="logo-circle" id="pLogoCircle"><span>LOGO</span></div>
+        <div class="head-text">
+          <p class="biz-name" id="pBizName">Abban Ventures</p>
+          <p class="biz-line" id="pBizAddress">Awutu Bawjiase, Market Road</p>
+          <p class="biz-line" id="pBizTel">Tel: 0553479275</p>
+        </div>
+      </div>
+
+      <div class="invoice-band">INVOICE</div>
+
+      <div class="details">
+        <div class="dline">
+          <span class="dlabel">Client's Name</span>
+          <span class="dval" id="pClientName">&nbsp;</span>
+        </div>
+        <div class="details-row">
+          <div class="dline">
+            <span class="dlabel">Address</span>
+            <span class="dval" id="pClientAddress">&nbsp;</span>
+          </div>
+          <div class="dline">
+            <span class="dlabel">Number</span>
+            <span class="dval" id="pClientNumber">&nbsp;</span>
+          </div>
+        </div>
+        <div class="details-row">
+          <div class="dline">
+            <span class="dlabel">Date</span>
+            <span class="dval" id="pInvDate">&nbsp;</span>
+          </div>
+          <div class="dline">
+            <span class="dlabel">Invoice No.</span>
+            <span class="dval" id="pInvNumber">&nbsp;</span>
+          </div>
+        </div>
+      </div>
+
+      <table class="items">
+        <thead>
+          <tr>
+            <th class="qty">Qty</th>
+            <th class="desc">Description</th>
+            <th class="rate" id="pRateHeader">Unit Cost<br>Ghc</th>
+            <th class="amount" id="pAmountHeader">Sub Total<br>Ghc</th>
+          </tr>
+        </thead>
+        <tbody id="pItemsBody"></tbody>
+      </table>
+
+      <div class="total-wrap">
+        <div class="total-box">
+          <span class="total-label">TOTAL</span>
+          <span class="total-value" id="pTotal">0.00</span>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="sign-row">
+        <div class="sign-block">
+          <div class="sign-line">
+            <img id="pSignature" class="signature-image" alt="Digital signature">
+          </div>
+          <p class="sign-label" id="pSignatureName">MANAGER</p>
+        </div>
+        
+      </div>
+
+      <div class="footer-strip">
+        <div class="band"></div>
+        <div class="wedge"></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Start with 10 blank rows, like the paper template
+  let items = Array.from({length: 10}, () => ({ qty: '', desc: '', rate: '' }));
+
+  const itemsWrap = document.getElementById('itemsWrap');
+  const addItemBtn = document.getElementById('addItemBtn');
+  const printBtn = document.getElementById('printBtn');
+  const logoInput = document.getElementById('logoInput');
+  const logoPreview = document.getElementById('logoPreview');
+  const pLogoCircle = document.getElementById('pLogoCircle');
+  const signatureInput = document.getElementById('signatureInput');
+  const signaturePreview = document.getElementById('signaturePreview');
+  const pSignature = document.getElementById('pSignature');
+  const signatureName = document.getElementById('signatureName');
+  const pSignatureName = document.getElementById('pSignatureName');
+
+
+  // Persistent invoice counter. It survives page refreshes in the same browser.
+  const INVOICE_COUNTER_KEY = 'invoiceGeneratorNextNumber';
+
+  function getNextInvoiceNumber(){
+    let next = parseInt(localStorage.getItem(INVOICE_COUNTER_KEY) || '1', 10);
+    if (!Number.isFinite(next) || next < 1) next = 1;
+    return String(next).padStart(4, '0');
+  }
+
+  function consumeInvoiceNumber(){
+    const current = getNextInvoiceNumber();
+    localStorage.setItem(
+      INVOICE_COUNTER_KEY,
+      String(parseInt(current, 10) + 1)
+    );
+    return current;
+  }
+
+  function assignNewInvoiceNumber(){
+    document.getElementById('invNumber').value = consumeInvoiceNumber();
+  }
+
+  function fmt(n){
+    const val = isNaN(n) ? 0 : n;
+    return val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function escapeAttr(str){
+    return String(str).replace(/"/g, '&quot;');
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function renderItemRows(){
+    itemsWrap.innerHTML = '';
+    items.forEach((item, idx) => {
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <div>
+          ${idx === 0 ? '<label>Qty</label>' : ''}
+          <input type="text" class="i-qty" value="${escapeAttr(item.qty)}">
+        </div>
+        <div>
+          ${idx === 0 ? '<label>Description</label>' : ''}
+          <input type="text" class="i-desc" value="${escapeAttr(item.desc)}" placeholder="Item description">
+        </div>
+        <div>
+          ${idx === 0 ? '<label>Unit cost</label>' : ''}
+          <input type="number" class="i-rate" value="${item.rate}" min="0" step="0.01">
+        </div>
+        <div>
+          ${idx === 0 ? '<label>&nbsp;</label>' : ''}
+          <button type="button" class="remove-item" ${items.length <= 1 ? 'disabled' : ''} title="Remove row">&times;</button>
+        </div>
+      `;
+      row.querySelector('.i-qty').addEventListener('input', e => { item.qty = e.target.value; renderPreview(); });
+      row.querySelector('.i-desc').addEventListener('input', e => { item.desc = e.target.value; renderPreview(); });
+      row.querySelector('.i-rate').addEventListener('input', e => { item.rate = e.target.value; renderPreview(); });
+      row.querySelector('.remove-item').addEventListener('click', () => {
+        items.splice(idx, 1);
+        renderItemRows();
+        renderPreview();
+      });
+      itemsWrap.appendChild(row);
+    });
+  }
+
+  function formatDate(value){
+    if (!value) return '';
+    const d = new Date(value + 'T00:00:00');
+    if (isNaN(d)) return '';
+    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function renderPreview(){
+    document.getElementById('pBizName').textContent = document.getElementById('bizName').value || 'Business Name';
+    document.getElementById('pBizAddress').textContent = document.getElementById('bizAddress').value;
+    document.getElementById('pBizTel').textContent = document.getElementById('bizTel').value ? ('Tel: ' + document.getElementById('bizTel').value) : '';
+
+    document.getElementById('pClientName').textContent = document.getElementById('clientName').value || '\u00A0';
+    document.getElementById('pClientAddress').textContent = document.getElementById('clientAddress').value || '\u00A0';
+    document.getElementById('pClientNumber').textContent = document.getElementById('clientNumber').value || '\u00A0';
+    document.getElementById('pInvDate').textContent = formatDate(document.getElementById('invDate').value) || '\u00A0';
+    document.getElementById('pInvNumber').textContent = document.getElementById('invNumber').value || '\u00A0';
+    pSignatureName.textContent = signatureName.value.trim() || 'MANAGER';
+
+    const cur = document.getElementById('currency').value || '';
+    document.getElementById('pRateHeader').innerHTML = 'Unit Cost<br>' + escapeHtml(cur);
+    document.getElementById('pAmountHeader').innerHTML = 'Sub Total<br>' + escapeHtml(cur);
+
+    const body = document.getElementById('pItemsBody');
+    body.innerHTML = '';
+    let total = 0;
+    items.forEach(item => {
+      const qtyNum = parseFloat(item.qty) || 0;
+      const rateNum = parseFloat(item.rate) || 0;
+      const hasContent = item.qty || item.desc || item.rate;
+      const amount = qtyNum * rateNum;
+      if (hasContent) total += amount;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="qty-cell">${item.qty ? escapeHtml(item.qty) : '&nbsp;'}</td>
+        <td class="desc-cell">${item.desc ? escapeHtml(item.desc) : '&nbsp;'}</td>
+        <td class="num">${item.rate ? fmt(rateNum) : '&nbsp;'}</td>
+        <td class="num">${hasContent ? fmt(amount) : '&nbsp;'}</td>
+      `;
+      body.appendChild(tr);
+    });
+
+    document.getElementById('pTotal').textContent = fmt(total);
+  }
+
+  addItemBtn.addEventListener('click', () => {
+    items.push({ qty: '', desc: '', rate: '' });
+    renderItemRows();
+    renderPreview();
+  });
+
+
+  signatureInput.addEventListener('change', () => {
+    const file = signatureInput.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      signaturePreview.innerHTML = `<img src="${reader.result}" alt="signature">`;
+      pSignature.src = reader.result;
+      pSignature.style.display = 'block';
+      renderPreview();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  signatureName.addEventListener('input', renderPreview);
+
+  async function downloadInvoicePDF(){
+    const button = printBtn;
+    const oldText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Preparing PDF...';
+
+    try {
+      const sheet = document.getElementById('sheet');
+
+      // Capture the visible invoice exactly as designed.
+      const canvas = await html2canvas(sheet, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff',
+        logging: false
+      });
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const margin = 8;
+      const maxWidth = pageWidth - margin * 2;
+      const maxHeight = pageHeight - margin * 2;
+
+      const ratio = Math.min(
+        maxWidth / canvas.width,
+        maxHeight / canvas.height
+      );
+
+      const imgWidth = canvas.width * ratio;
+      const imgHeight = canvas.height * ratio;
+      const x = (pageWidth - imgWidth) / 2;
+      const y = (pageHeight - imgHeight) / 2;
+
+      pdf.addImage(
+        canvas.toDataURL('image/png', 1.0),
+        'PNG',
+        x,
+        y,
+        imgWidth,
+        imgHeight
+      );
+
+      const invoiceNo = document.getElementById('invNumber').value || 'invoice';
+      pdf.save(`Invoice-${invoiceNo}.pdf`);
+    } catch (error) {
+      console.error(error);
+      alert('The PDF could not be generated. Please try again.');
+    } finally {
+      button.disabled = false;
+      button.textContent = oldText;
+    }
+  }
+
+  printBtn.addEventListener('click', downloadInvoicePDF);
+
+
+  logoInput.addEventListener('change', () => {
+    const file = logoInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      logoPreview.innerHTML = `<img src="${reader.result}" alt="logo">`;
+      pLogoCircle.innerHTML = `<img src="${reader.result}" alt="logo">`;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  ['bizName','bizAddress','bizTel','clientName','clientAddress','clientNumber','invDate','currency']
+    .forEach(id => {
+      document.getElementById(id).addEventListener('input', renderPreview);
+    });
+
+  document.getElementById('invDate').valueAsDate = new Date();
+  assignNewInvoiceNumber();
+
+  renderItemRows();
+  renderPreview();
+</script>
+
+</body>
+</html>
