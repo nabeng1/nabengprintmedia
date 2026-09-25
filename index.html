@@ -3,38 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Nabeng Print Media — Works Beyond Quality. Professional printing, graphic design, branding and DTF printing.">
+  <meta name="theme-color" content="#08111f">
+  <meta name="description" content="Nabeng Print Media — premium printing, graphic design, branding and custom print solutions in Ghana.">
   <title>Nabeng Print Media | Works Beyond Quality</title>
-  
-
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
- 
-  
 </head>
-
 <body>
+  <div class="site-noise" aria-hidden="true"></div>
+
   <header class="site-header" id="siteHeader">
     <div class="container nav-wrap">
       <a class="brand" href="#home" aria-label="Nabeng Print Media home">
-        <img src="assets/logo.png" alt="Nabeng Print Media logo">
+        <img src="assets/logo.png" alt="Nabeng Print Media">
+        <span><strong>NABENG</strong><small>PRINT MEDIA</small></span>
       </a>
 
-      <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#home" class="active">Home</a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#home">Home</a>
         <a href="#services">Services</a>
         <a href="#work">Our Work</a>
         <a href="#about">About</a>
+        <a href="#testimonials">Reviews</a>
         <a href="#contact">Contact</a>
-		<a href="#invoice.html">Invoice</a>
+        <a href="invoice.html">Invoice</a>
       </nav>
 
       <a href="#quote" class="btn btn-primary nav-cta">Get a Quote <span>↗</span></a>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -44,274 +44,298 @@
       <a href="#services">Services</a>
       <a href="#work">Our Work</a>
       <a href="#about">About</a>
+      <a href="#testimonials">Reviews</a>
       <a href="#contact">Contact</a>
-	  <a href="#invoice.html">Invoice</a>
-      <a href="#quote" class="btn btn-primary">Get a Quote ↗</a>
+      <a href="invoice.html">Invoice</a>
+      <a href="#quote" class="btn btn-primary">Get a Quote <span>↗</span></a>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <section class="hero" id="home">
-      <div class="hero-glow glow-one"></div>
-      <div class="hero-glow glow-two"></div>
+      <div class="hero-orb orb-one"></div>
+      <div class="hero-orb orb-two"></div>
+      <div class="hero-grid-lines" aria-hidden="true"></div>
 
       <div class="container hero-grid">
         <div class="hero-content reveal">
-          <div class="eyebrow"><span></span> Creative Print & Design Studio</div>
-
-          <h1>Works Beyond <em>Quality.</em></h1>
-
-          <p class="hero-text">
-            We turn ideas into memorable prints, powerful brands and beautiful designs
-            that make your business stand out.
-          </p>
+          <div class="eyebrow light"><span></span> Premium Print &amp; Creative Studio</div>
+          <h1>Ideas deserve a<br><em>better finish.</em></h1>
+          <p class="hero-text">From business stationery to bold branding, custom apparel and event printing, we turn your ideas into work people remember.</p>
 
           <div class="hero-actions">
             <a href="#quote" class="btn btn-primary btn-large">Start a Project <span>↗</span></a>
-            <a href="#work" class="btn btn-outline btn-large">Explore Our Work</a>
+            <a href="#work" class="btn btn-ghost btn-large">Explore Our Work</a>
           </div>
 
-          <div class="hero-trust">
-            <div class="trust-item">
-              <strong>Quality</strong>
-              <span>Every detail matters</span>
-            </div>
-            <div class="trust-divider"></div>
-            <div class="trust-item">
-              <strong>Creative</strong>
-              <span>Ideas made visible</span>
-            </div>
+          <div class="hero-proof">
+            <div><strong>Quality</strong><span>Premium finishing</span></div>
+            <i></i>
+            <div><strong>Speed</strong><span>Reliable turnaround</span></div>
+            <i></i>
+            <div><strong>Care</strong><span>Made for your brand</span></div>
           </div>
         </div>
 
-        <div class="hero-visual reveal">
-          <div class="visual-card card-back"></div>
-          <div class="visual-card card-main">
-            <div class="visual-top">
-              <span>NPM</span>
-              <span>01 / 04</span>
-            </div>
-            <div class="visual-center">
-              <img src="assets/logo.png" alt="Nabeng Print Media">
-              <p>PRINT • DESIGN • BRAND</p>
-            </div>
-            <div class="visual-bottom">
-              <span>Works Beyond Quality.</span>
-              <span>2026</span>
-            </div>
+        <div class="hero-showcase reveal reveal-delay">
+          <div class="showcase-card card-one">
+            <span class="card-label">BRANDING</span>
+            <strong>Make your<br>brand visible.</strong>
+            <small>Business identity • Print • Signage</small>
           </div>
-          <div class="floating-badge">
-            <span class="badge-icon">✦</span>
-            <span>Professional<br><strong>Print Solutions</strong></span>
+          <div class="showcase-card card-two">
+            <span class="card-label">APPAREL</span>
+            <strong>Wear the<br>message.</strong>
+            <small>DTF • T-Shirts • Custom apparel</small>
           </div>
+          <div class="showcase-main">
+            <div class="showcase-top"><span>NPM / 01</span><span>2026</span></div>
+            <div class="showcase-logo"><img src="assets/logo.png" alt="Nabeng Print Media logo"></div>
+            <div class="showcase-title">WORKS<br><em>BEYOND</em><br>QUALITY.</div>
+            <div class="showcase-bottom"><span>PRINT</span><span>DESIGN</span><span>BRAND</span></div>
+          </div>
+          <div class="showcase-badge"><span>✦</span><strong>Professional<br>Print Solutions</strong></div>
         </div>
       </div>
     </section>
 
-    <section class="services section" id="services">
+    <!-- STATS -->
+    <section class="stats-strip" aria-label="Nabeng Print Media highlights">
+      <div class="container stats-strip-grid">
+        <div class="stat reveal"><strong class="counter" data-target="8">0</strong><span>+</span><small>Core print<br>solutions</small></div>
+        <div class="stat reveal"><strong class="counter" data-target="100">0</strong><span>%</span><small>Attention to<br>detail</small></div>
+        <div class="stat reveal"><strong class="counter" data-target="24">0</strong><span>hr</span><small>Fast response<br>target</small></div>
+        <div class="stat stat-note reveal"><span class="dot"></span><small>Built for businesses,<br>events &amp; everyday ideas.</small></div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section services" id="services">
       <div class="container">
         <div class="section-heading reveal">
           <div>
             <div class="eyebrow"><span></span> What We Do</div>
-            <h2>Everything you need<br><em>to get noticed.</em></h2>
+            <h2>Print it. Brand it.<br><em>Make it memorable.</em></h2>
           </div>
-          <p>From the first concept to the final print, we combine creativity, quality and precision.</p>
+          <p>One creative partner for the printed pieces, branded materials and visual details that help your business or event look complete.</p>
         </div>
 
         <div class="services-grid">
-          <article class="service-card featured reveal">
-            <div class="service-number">01</div>
-            <div class="service-icon">✦</div>
+          <article class="service-card service-feature reveal">
+            <div class="service-top"><span>01</span><b>✦</b></div>
             <h3>Graphic Design</h3>
-            <p>Creative designs that communicate your message clearly and professionally.</p>
-            <a href="#quote">Explore service <span>↗</span></a>
+            <p>Professional artwork for brands, businesses, campaigns, events and personal projects.</p>
+            <a href="#quote" data-service="Graphic Design">Request this service <span>↗</span></a>
           </article>
-
           <article class="service-card reveal">
-            <div class="service-number">02</div>
-            <div class="service-icon">▣</div>
-            <h3>Digital Printing</h3>
-            <p>Sharp, vibrant and professional prints for every occasion and business need.</p>
-            <a href="#quote">Explore service <span>↗</span></a>
+            <div class="service-top"><span>02</span><b>▦</b></div>
+            <h3>Business Cards</h3>
+            <p>Clean, premium cards that give your first introduction a polished finish.</p>
+            <a href="#quote" data-service="Business Cards">Request this service <span>↗</span></a>
           </article>
-
           <article class="service-card reveal">
-            <div class="service-number">03</div>
-            <div class="service-icon">◇</div>
-            <h3>DTF & T-Shirt</h3>
-            <p>Custom apparel printing that gives your clothing a bold and lasting finish.</p>
-            <a href="#quote">Explore service <span>↗</span></a>
+            <div class="service-top"><span>03</span><b>▤</b></div>
+            <h3>Flyers &amp; Brochures</h3>
+            <p>Promotional prints designed to communicate quickly and look professional.</p>
+            <a href="#quote" data-service="Flyers & Brochures">Request this service <span>↗</span></a>
           </article>
-
           <article class="service-card reveal">
-            <div class="service-number">04</div>
-            <div class="service-icon">◈</div>
-            <h3>Branding</h3>
-            <p>Build a consistent visual identity that makes your brand easy to remember.</p>
-            <a href="#quote">Explore service <span>↗</span></a>
+            <div class="service-top"><span>04</span><b>▥</b></div>
+            <h3>Banners &amp; Signage</h3>
+            <p>Large-format prints for shops, schools, churches, parties, campaigns and events.</p>
+            <a href="#quote" data-service="Banners & Signage">Request this service <span>↗</span></a>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-top"><span>05</span><b>◇</b></div>
+            <h3>Invitations</h3>
+            <p>Wedding, birthday, graduation and special-event stationery with a premium feel.</p>
+            <a href="#quote" data-service="Invitation Cards">Request this service <span>↗</span></a>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-top"><span>06</span><b>◈</b></div>
+            <h3>DTF &amp; T-Shirts</h3>
+            <p>Custom apparel printing for teams, businesses, schools, events and personal designs.</p>
+            <a href="#quote" data-service="DTF & T-Shirt Printing">Request this service <span>↗</span></a>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-top"><span>07</span><b>○</b></div>
+            <h3>Stickers &amp; Labels</h3>
+            <p>Product labels, packaging stickers and custom adhesive prints for everyday branding.</p>
+            <a href="#quote" data-service="Stickers & Labels">Request this service <span>↗</span></a>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-top"><span>08</span><b>⬡</b></div>
+            <h3>Branding &amp; School Printing</h3>
+            <p>Brand identity, school materials, event stationery and coordinated print packages.</p>
+            <a href="#quote" data-service="Branding & School Printing">Request this service <span>↗</span></a>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="work section" id="work">
+    <!-- WORK -->
+    <section class="section work" id="work">
       <div class="container">
-        <div class="section-heading reveal">
+        <div class="section-heading work-heading reveal">
           <div>
             <div class="eyebrow"><span></span> Selected Work</div>
-            <h2>Made to look<br><em>remarkable.</em></h2>
+            <h2>A closer look at<br><em>what we create.</em></h2>
           </div>
           <a href="#quote" class="text-link">Start your project ↗</a>
         </div>
 
-        <div class="portfolio-grid">
-          <div class="portfolio-item large reveal">
-            <div class="portfolio-placeholder">
-              <img src="assets/branding.png"></img>
-              <small>Branding / Print</small>
-            </div>
-          </div>
-          <div class="portfolio-item reveal">
-            <div class="portfolio-placeholder">
-               <img src="assets/design.png"></img>
-              <small>Graphic Design</small>
-            </div>
-          </div>
-          <div class="portfolio-item reveal">
-            <div class="portfolio-placeholder">
-              <img src="assets/frame.png"></img>
-              <small>Picture Frame</small>
-            </div>
-          </div>
+        <div class="portfolio-filters reveal" role="tablist" aria-label="Portfolio filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="branding">Branding</button>
+          <button class="filter-btn" data-filter="flyers">Flyers</button>
+          <button class="filter-btn" data-filter="banners">Banners</button>
+          <button class="filter-btn" data-filter="invitations">Invitations</button>
+          <button class="filter-btn" data-filter="tshirts">T-Shirts</button>
+          <button class="filter-btn" data-filter="frames">Frames</button>
+        </div>
+
+        <div class="portfolio-grid" id="portfolioGrid">
+          <article class="portfolio-item portfolio-large reveal" data-category="branding">
+            <img src="assets/branding.png" alt="Branding project" loading="lazy">
+            <div class="portfolio-overlay"><span>Branding</span><strong>Identity that gets noticed.</strong></div>
+          </article>
+          <article class="portfolio-item reveal" data-category="flyers">
+            <img src="assets/design.png" alt="Graphic design project" loading="lazy">
+            <div class="portfolio-overlay"><span>Flyers</span><strong>Designed to communicate.</strong></div>
+          </article>
+		  
+          <article class="portfolio-item reveal" data-category="frames">
+            <img src="assets/frame.png" alt="Picture frame project" loading="lazy">
+            <div class="portfolio-overlay"><span>Frames</span><strong>Finish the memory beautifully.</strong></div>
+          </article>
+		  
+          <article class="portfolio-item reveal" data-category="banner">
+            <img src="assets/banner.jpg" alt="Picture frame project" loading="lazy">
+			<div class="portfolio-overlay"><span>Large Format</span><strong>Big prints, Clear message. </strong></div>
+
+          </article>
+		  
+          <article class="portfolio-item reveal" data-category="invitaions">
+            <img src="assets/invite .jpg" alt="Picture frame project" loading="lazy">
+		<div class="portfolio-overlay"><span>Invitations</span><strong>Make the occasion feel special.</strong></div>
+
+          </article>
+		  
+          <article class="portfolio-item reveal" data-category="rubber bag">
+            <img src="assets/bag.jpg" alt="Picture frame project" loading="lazy">
+					<div class="portfolio-overlay"><span>Rubber bag</span><strong>Customize your world</strong></div>
+
+          </article>
+        </div>
+        <p class="portfolio-empty" id="portfolioEmpty">No projects in this category yet. Contact us to create yours.</p>
+      </div>
+    </section>
+
+    <!-- WHY US -->
+    <section class="section why" id="about">
+      <div class="container why-grid">
+        <div class="why-intro reveal">
+          <div class="eyebrow light"><span></span> Why Nabeng Print Media</div>
+          <h2>More than a printer.<br><em>A creative partner.</em></h2>
+          <p>We care about how the final piece feels in someone's hands, looks on a wall or represents your business.</p>
+          <a href="#quote" class="btn btn-primary btn-large">Work With Us <span>↗</span></a>
+        </div>
+
+        <div class="why-list">
+          <article class="why-card reveal"><span>01</span><div><h3>Quality Guarantee</h3><p>We aim for clean artwork, sharp output and a professional finish across every project.</p></div><b>↗</b></article>
+          <article class="why-card reveal"><span>02</span><div><h3>Fast Turnaround</h3><p>Clear communication and a practical workflow help move projects from idea to finished print.</p></div><b>↗</b></article>
+          <article class="why-card reveal"><span>03</span><div><h3>Professional Finishing</h3><p>We pay attention to the small details that make printed work feel complete and intentional.</p></div><b>↗</b></article>
+          <article class="why-card reveal"><span>04</span><div><h3>Customer-Focused Service</h3><p>Tell us what you need, and we help you choose a suitable print or design direction.</p></div><b>↗</b></article>
         </div>
       </div>
     </section>
 
-    <section class="about section" id="about">
-      <div class="container about-grid">
-        <div class="about-mark reveal">
-          <img src="assets/logo.png" alt="Nabeng Print Media">
-        </div>
-
-        <div class="about-content reveal">
-          <div class="eyebrow"><span></span> About Nabeng Print Media</div>
-          <h2>We don't just print.<br><em>We make impressions.</em></h2>
-          <p>
-            Nabeng Print Media is a creative printing and design studio focused on helping
-            individuals, businesses and organizations present themselves with confidence.
-          </p>
-          <p>
-            Whether it is a business card, banner, invitation, branded T-shirt or complete
-            visual identity, we put quality and attention to detail into every project.
-          </p>
-
-          <div class="stats">
-            <div><strong>01</strong><span>Creative<br>Approach</span></div>
-            <div><strong>02</strong><span>Quality<br>Finish</span></div>
-            <div><strong>03</strong><span>Customer<br>Focused</span></div>
+    <!-- TESTIMONIALS -->
+    <section class="section testimonials" id="testimonials">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <div class="eyebrow"><span></span> Client Reviews</div>
+            <h2>Good work should<br><em>speak for itself.</em></h2>
           </div>
+          <p>These cards are ready for real customer reviews and can later be connected directly to Supabase.</p>
+        </div>
+        <div class="testimonial-grid">
+          <article class="testimonial-card reveal"><div class="stars">★★★★★</div><p>“Professional work, clear communication and a finish that represented our brand well.”</p><div class="reviewer"><span>NP</span><div><strong>Client Review</strong><small>Business customer</small></div></div></article>
+          <article class="testimonial-card featured-testimonial reveal"><div class="quote-mark">“</div><p>“From the design stage to the final print, the process felt simple and well handled.”</p><div class="reviewer"><span>NP</span><div><strong>Client Review</strong><small>Event customer</small></div></div></article>
+          <article class="testimonial-card reveal"><div class="stars">★★★★★</div><p>“The attention to detail made the finished materials look much more premium.”</p><div class="reviewer"><span>NP</span><div><strong>Client Review</strong><small>Branding customer</small></div></div></article>
         </div>
       </div>
     </section>
 
-    <section class="quote section" id="quote">
+    <!-- QUOTE -->
+    <section class="section quote" id="quote">
       <div class="container">
         <div class="quote-box reveal">
           <div class="quote-copy">
-            <div class="eyebrow"><span></span> Let's Create</div>
-            <h2>Have an idea?<br><em>Let's bring it to life.</em></h2>
-            <p>Tell us what you need and we'll help you turn your idea into something worth seeing.</p>
+            <div class="eyebrow light"><span></span> Start a Project</div>
+            <h2>Have an idea?<br><em>Let's make it real.</em></h2>
+            <p>Send us the details. You can also attach your artwork, logo, reference image or document so we can understand the project faster.</p>
+            <div class="quote-contact"><a href="tel:+233201443088">☎ +233 20 144 3088</a><a href="https://wa.me/233201443088" target="_blank" rel="noopener">WhatsApp ↗</a></div>
           </div>
 
           <form class="quote-form" id="quoteForm">
             <div class="form-row">
-              <label>
-                Your Name
-                <input type="text" id="name" placeholder="Full name" required>
-              </label>
-              <label>
-                Phone / WhatsApp
-                <input type="tel" id="phone" placeholder="024 XXX XXXX" required>
-              </label>
+              <label>Your Name<input type="text" id="name" placeholder="Full name" autocomplete="name" required></label>
+              <label>Phone / WhatsApp<input type="tel" id="phone" placeholder="024 XXX XXXX" autocomplete="tel" required></label>
             </div>
-
-            <label>
-              What do you need?
+            <label>What do you need?
               <select id="service" required>
                 <option value="">Select a service</option>
-                <option>Graphic Design</option>
-                <option>Digital Printing</option>
-                <option>DTF & T-Shirt Printing</option>
-                <option>Branding</option>
-                <option>Business Cards</option>
-                <option>Flyers & Brochures</option>
-                <option>Banners & Signage</option>
-                <option>Invitation Cards</option>
-                <option>Other</option>
+                <option>Graphic Design</option><option>Business Cards</option><option>Flyers & Brochures</option><option>Banners & Signage</option><option>Invitation Cards</option><option>DTF & T-Shirt Printing</option><option>Stickers & Labels</option><option>Large-Format Printing</option><option>Branding</option><option>School & Event Printing</option><option>Other</option>
               </select>
             </label>
-
-            <label>
-              Project details
-              <textarea id="details" rows="4" placeholder="Tell us about your project..."></textarea>
-            </label>
-
-            <button type="submit" class="btn btn-primary btn-large">Request a Quote ↗</button>
-            <p class="form-note" id="formMessage"></p>
+            <label>Project details<textarea id="details" rows="4" placeholder="Quantity, size, deadline, colours, finishing or any other useful details..."></textarea></label>
+            <label class="file-upload">Attach artwork / reference <span>Optional • JPG, PNG, PDF • Max 5MB</span><input type="file" id="artwork" accept="image/jpeg,image/png,application/pdf"></label>
+            <div class="selected-file" id="selectedFile" aria-live="polite"></div>
+            <button type="submit" class="btn btn-primary btn-large" id="quoteSubmit">Request a Quote <span>↗</span></button>
+            <p class="form-note" id="formMessage" role="status"></p>
           </form>
         </div>
       </div>
     </section>
 
-    <section class="contact section" id="contact">
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
       <div class="container contact-grid">
-        <div class="reveal">
+        <div class="contact-intro reveal">
           <div class="eyebrow"><span></span> Contact</div>
           <h2>Let's talk about<br><em>your next project.</em></h2>
+          <p>Prefer a quick conversation? Call or message us directly.</p>
+          <div class="contact-actions"><a class="btn btn-primary" href="https://wa.me/233201443088" target="_blank" rel="noopener">Chat on WhatsApp ↗</a><a class="btn btn-outline" href="tel:+233201443088">Call Now</a></div>
         </div>
-
         <div class="contact-details reveal">
-          <a href="tel:+233201443088">
-            <small>Call / WhatsApp</small>
-            <strong>+233 20 144 3088 ↗</strong>
-          </a>
-          <a href="mailto:nabengprintmedia@gmail.com">
-            <small>Email</small>
-            <strong>nabengprintmedia@gmail.com ↗</strong>
-          </a>
-          <div>
-            <small>Location</small>
-            <strong>Awutu Bawjiase-Ghana</strong>
-          </div>
+          <a href="tel:+233201443088"><small>Call / WhatsApp</small><strong>+233 20 144 3088 ↗</strong></a>
+          <a href="mailto:nabengprintmedia@gmail.com"><small>Email</small><strong>nabengprintmedia@gmail.com ↗</strong></a>
+          <div><small>Location</small><strong>Awutu Bawjiase-Ghana</strong></div>
+          <div><small>Business Hours</small><strong>Mon – Sat · Contact for current availability</strong></div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <div class="container footer-top">
-      <div class="footer-brand">
-        <img src="assets/logo.png" alt="Nabeng Print Media">
-        <p>Works Beyond Quality.</p>
-      </div>
+  <!-- FLOATING WHATSAPP -->
+  <a class="floating-whatsapp" href="https://wa.me/233201443088" target="_blank" rel="noopener" aria-label="Chat with Nabeng Print Media on WhatsApp">
+    <span>◉</span><strong>Chat on WhatsApp</strong>
+  </a>
 
-      <div class="footer-links">
-        <a href="#home">Home</a>
-        <a href="#services">Services</a>
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </div>
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand"><a class="brand footer-logo" href="#home"><img src="assets/logo.png" alt="Nabeng Print Media"><span><strong>NABENG</strong><small>PRINT MEDIA</small></span></a><p>Works Beyond Quality.</p><small>Premium printing, design and branding solutions.</small></div>
+      <div class="footer-column"><h4>Services</h4><a href="#services">Graphic Design</a><a href="#services">Business Cards</a><a href="#services">Flyers &amp; Brochures</a><a href="#services">Banners &amp; Signage</a><a href="#services">DTF &amp; T-Shirts</a></div>
+      <div class="footer-column"><h4>Quick Links</h4><a href="#home">Home</a><a href="#work">Our Work</a><a href="#about">Why Us</a><a href="#testimonials">Reviews</a><a href="invoice.html">Invoice</a></div>
+      <div class="footer-column footer-contact"><h4>Contact</h4><a href="tel:+233201443088">+233 20 144 3088</a><a href="mailto:nabengprintmedia@gmail.com">nabengprintmedia@gmail.com</a><span>Awutu Bawjiase-Ghana</span><span>Mon – Sat</span></div>
     </div>
-
-    <div class="container footer-bottom">
-      <span>© <span id="year"></span> Nabeng Print Media. All rights reserved.</span>
-      <span>Designed with purpose.</span>
-    </div>
+    <div class="container footer-bottom"><span>© <span id="year"></span> Nabeng Print Media. All rights reserved.</span><span>Works Beyond Quality.</span></div>
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
 </body>
 </html>
