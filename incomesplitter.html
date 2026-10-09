@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>Nabeng Income Splitter </title>
+  
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f3f5f9;
+  --surface: #ffffff;
+  --ink: #152033;
+  --muted: #7b8495;
+  --line: #e7eaf0;
+  --navy: #101827;
+  --green: #16866a;
+  --shadow: 0 18px 55px rgba(23, 36, 60, .08);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 30px 18px;
+  background: radial-gradient(circle at 8% 0%, #e6f2ef 0, transparent 27%), var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+.app-shell { width: min(100%, 1060px); margin: 0 auto; }
+.topbar { display: flex; align-items: center; gap: 13px; }
+.brand-mark {
+  display: grid; place-items: center; width: 48px; height: 48px; border-radius: 15px;
+  color: #f4d58a; background: var(--navy); font: 800 25px Manrope, sans-serif;
+  box-shadow: 0 8px 20px #10182726;
+}
+.eyebrow { margin: 0 0 5px; color: #82909f; font-size: 10px; font-weight: 700; letter-spacing: 1.8px; }
+h1 { margin: 0; font: 800 20px Manrope, sans-serif; letter-spacing: -.5px; }
+.live-tag { margin-left: auto; display: flex; align-items: center; gap: 7px; border: 1px solid #dcefe8; border-radius: 999px; padding: 8px 12px; color: #277b62; background: #f2fbf7; font-size: 12px; font-weight: 700; }
+.live-tag span, .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #28a879; }
+.intro { margin: 45px 0 25px; max-width: 650px; }
+.intro .eyebrow { color: #16866a; }
+.intro h2 { margin: 0 0 10px; font: 800 clamp(27px, 4vw, 40px)/1.15 Manrope, sans-serif; letter-spacing: -1.5px; }
+.intro > p:last-child { margin: 0; max-width: 540px; color: var(--muted); line-height: 1.7; font-size: 15px; }
+.income-card { padding: 24px; background: var(--surface); border: 1px solid #e9edf2; border-radius: 20px; box-shadow: var(--shadow); }
+.income-card label { display: block; margin-bottom: 12px; color: #495467; font-size: 13px; font-weight: 700; }
+.amount-input { display: flex; align-items: center; gap: 13px; border: 1.5px solid #dce3e9; border-radius: 14px; padding: 5px 17px; transition: border-color .2s, box-shadow .2s; }
+.amount-input:focus-within { border-color: #16866a; box-shadow: 0 0 0 4px #16866a16; }
+.amount-input > span { color: #16866a; font-weight: 800; font-size: 14px; }
+.amount-input input { min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; padding: 12px 0; color: var(--ink); font: 800 clamp(24px, 4vw, 32px) Manrope, sans-serif; }
+.amount-input input::-webkit-inner-spin-button, .amount-input input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+.input-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; color: #929bab; font-size: 12px; }
+.text-button { border: 0; background: transparent; color: #16866a; font: 700 12px 'DM Sans', sans-serif; cursor: pointer; }
+.summary-row { display: flex; justify-content: space-between; align-items: end; gap: 15px; margin: 34px 0 16px; }
+.summary-label { margin: 0 0 5px; color: #7b8495; font-size: 12px; font-weight: 600; }
+.summary-row h2 { margin: 0; font: 800 25px Manrope, sans-serif; letter-spacing: -.8px; }
+.allocation-pill { display: flex; align-items: center; gap: 7px; padding: 8px 11px; border-radius: 999px; background: #e9f7f1; color: #277b62; font-size: 11px; font-weight: 700; }
+.allocations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.allocation-card { --accent: #16866a; --tint: #eaf7f1; padding: 22px; background: var(--surface); border: 1px solid #e8ecf2; border-radius: 18px; box-shadow: 0 8px 25px #17243c08; }
+.allocation-card.business { --accent: #16866a; --tint: #eaf7f1; }
+.allocation-card.personal { --accent: #d18a28; --tint: #fff4e4; }
+.allocation-card.savings { --accent: #5576d9; --tint: #edf1ff; }
+.allocation-card.adakavi { --accent: #9a65c7; --tint: #f5edfc; }
+.card-top { display: flex; align-items: center; justify-content: space-between; }
+.icon-wrap { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; background: var(--tint); color: var(--accent); font-size: 23px; font-weight: 700; }
+.percentage { padding: 6px 9px; border-radius: 8px; background: var(--tint); color: var(--accent); font-size: 12px; font-weight: 800; }
+.category { margin: 18px 0 5px; font: 700 16px Manrope, sans-serif; }
+.description { min-height: 18px; margin: 0; color: #8992a1; font-size: 12px; }
+.amount { margin: 20px 0 15px; font: 800 clamp(21px, 3vw, 27px) Manrope, sans-serif; letter-spacing: -.7px; overflow-wrap: anywhere; }
+.progress-track { height: 5px; border-radius: 999px; background: #eef0f4; overflow: hidden; }
+.progress-fill { height: 100%; width: 0; border-radius: inherit; background: var(--accent); transition: width .3s ease; }
+.actions { margin-top: 24px; padding: 20px 0 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.actions > p { margin: 0; color: #8992a1; font-size: 12px; }
+.action-buttons { display: flex; gap: 9px; flex-wrap: wrap; }
+.primary-btn, .secondary-btn { border-radius: 11px; padding: 12px 16px; font: 700 12px 'DM Sans', sans-serif; cursor: pointer; transition: transform .15s, opacity .15s; }
+.primary-btn:hover, .secondary-btn:hover { transform: translateY(-1px); }
+.primary-btn { border: 1px solid var(--navy); color: white; background: var(--navy); }
+.secondary-btn { border: 1px solid #dfe5eb; color: #364256; background: white; }
+.status-message { flex-basis: 100%; color: #16866a !important; min-height: 14px; }
+footer { margin-top: 32px; text-align: center; color: #9aa2af; font-size: 11px; }
+footer span { margin: 0 5px; color: #16866a; }
+@media (max-width: 600px) {
+  body { padding: 22px 13px; }
+  .intro { margin-top: 35px; }
+  .income-card { padding: 18px; }
+  .allocations { grid-template-columns: 1fr; gap: 12px; }
+  .allocation-card { padding: 19px; }
+  .amount { margin-top: 14px; }
+  .summary-row { align-items: center; }
+  .summary-row h2 { font-size: 21px; }
+  .allocation-pill { font-size: 10px; }
+  .actions { align-items: stretch; }
+  .action-buttons { width: 100%; }
+  .action-buttons button { flex: 1; }
+}
+@media print {
+  body { padding: 0; background: white; }
+  .app-shell { width: 100%; }
+  .live-tag, .input-foot, .actions, footer { display: none !important; }
+  .intro { margin-top: 24px; }
+  .income-card, .allocation-card { box-shadow: none; break-inside: avoid; }
+  .allocations { grid-template-columns: repeat(2, 1fr); }
+}
+
+  
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark">N</div>
+      <div>
+        <p class="eyebrow">PERSONAL FINANCE TOOL</p>
+        <h1>Income Splitter</h1>
+      </div>
+      <span class="live-tag"><span></span> Ready</span>
+    </header>
+
+    <section class="intro">
+      <p class="eyebrow">PLAN YOUR MONEY</p>
+      <h2>Give every cedi a purpose.</h2>
+      <p>Enter your total income and see how it is divided across your four money goals.</p>
+    </section>
+
+    <section class="income-card" aria-labelledby="income-label">
+      <label id="income-label" for="income">Total income (GH₵)</label>
+      <div class="amount-input">
+        <span>GH₵</span>
+        <input id="income" type="number" min="0" step="0.01" placeholder="0.00" inputmode="decimal" autocomplete="off">
+      </div>
+      <div class="input-foot">
+        <span>Enter the amount you received</span>
+        <button id="clearBtn" class="text-button" type="button">Clear amount</button>
+      </div>
+    </section>
+
+    <section class="summary-row" aria-live="polite">
+      <div>
+        <p class="summary-label">Total allocated</p>
+        <h2 id="totalAllocated">GH₵ 0.00</h2>
+      </div>
+      <div class="allocation-pill"><span class="dot"></span> 100% allocated</div>
+    </section>
+
+    <section class="allocations" aria-label="Income allocations">
+      <article class="allocation-card business">
+        <div class="card-top">
+          <div class="icon-wrap" aria-hidden="true">↗</div>
+          <span class="percentage">30%</span>
+        </div>
+        <p class="category">Business Reinvestment</p>
+        <p class="description">Grow and strengthen your business.</p>
+        <h3 class="amount" id="businessAmount">GH₵ 0.00</h3>
+        <div class="progress-track"><div id="businessBar" class="progress-fill"></div></div>
+      </article>
+
+      <article class="allocation-card personal">
+        <div class="card-top">
+          <div class="icon-wrap" aria-hidden="true">♡</div>
+          <span class="percentage">30%</span>
+        </div>
+        <p class="category">Personal Needs</p>
+        <p class="description">Cover your day-to-day needs.</p>
+        <h3 class="amount" id="personalAmount">GH₵ 0.00</h3>
+        <div class="progress-track"><div id="personalBar" class="progress-fill"></div></div>
+      </article>
+
+      <article class="allocation-card savings">
+        <div class="card-top">
+          <div class="icon-wrap" aria-hidden="true">▤</div>
+          <span class="percentage">20%</span>
+        </div>
+        <p class="category">Savings</p>
+        <p class="description">Build your financial safety net.</p>
+        <h3 class="amount" id="savingsAmount">GH₵ 0.00</h3>
+        <div class="progress-track"><div id="savingsBar" class="progress-fill"></div></div>
+      </article>
+
+      <article class="allocation-card adakavi">
+        <div class="card-top">
+          <div class="icon-wrap" aria-hidden="true">◈</div>
+          <span class="percentage">20%</span>
+        </div>
+        <p class="category">Adakavi</p>
+        <p class="description">Your fourth money allocation.</p>
+        <h3 class="amount" id="adakaviAmount">GH₵ 0.00</h3>
+        <div class="progress-track"><div id="adakaviBar" class="progress-fill"></div></div>
+      </article>
+    </section>
+
+    <section class="actions">
+      <p id="helperText">Your breakdown will update automatically as you type.</p>
+      <div class="action-buttons">
+        <button id="copyBtn" class="secondary-btn" type="button">Copy breakdown</button>
+        <button id="printBtn" class="primary-btn" type="button">Print / Save PDF</button>
+      </div>
+      <p id="statusMessage" class="status-message" role="status"></p>
+    </section>
+
+    <footer>Made for your money goals <span>•</span> Nabeng</footer>
+  </main>
+  
+  <script>
+  const incomeInput = document.getElementById('income');
+const currency = new Intl.NumberFormat('en-GH', {
+  style: 'currency',
+  currency: 'GHS',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
+
+const allocations = [
+  { key: 'business', percent: 0.30, amountId: 'businessAmount', barId: 'businessBar' },
+  { key: 'personal', percent: 0.30, amountId: 'personalAmount', barId: 'personalBar' },
+  { key: 'savings', percent: 0.20, amountId: 'savingsAmount', barId: 'savingsBar' },
+  { key: 'adakavi', percent: 0.20, amountId: 'adakaviAmount', barId: 'adakaviBar' }
+];
+
+function formatMoney(value) {
+  return currency.format(value).replace('GHS', 'GH₵');
+}
+
+function updateBreakdown() {
+  const rawValue = Number(incomeInput.value);
+  const total = Number.isFinite(rawValue) && rawValue > 0 ? rawValue : 0;
+
+  document.getElementById('totalAllocated').textContent = formatMoney(total);
+
+  allocations.forEach((item) => {
+    const amount = total * item.percent;
+    document.getElementById(item.amountId).textContent = formatMoney(amount);
+    document.getElementById(item.barId).style.width = `${item.percent * 100}%`;
+  });
+
+  document.getElementById('helperText').textContent = total > 0
+    ? `Your income has been divided into four allocations totalling ${formatMoney(total)}.`
+    : 'Your breakdown will update automatically as you type.';
+
+  document.getElementById('statusMessage').textContent = '';
+}
+
+incomeInput.addEventListener('input', updateBreakdown);
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  incomeInput.value = '';
+  updateBreakdown();
+  incomeInput.focus();
+});
+
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const rawValue = Number(incomeInput.value);
+  const total = Number.isFinite(rawValue) && rawValue > 0 ? rawValue : 0;
+
+  if (total <= 0) {
+    document.getElementById('statusMessage').textContent = 'Enter an income amount first.';
+    incomeInput.focus();
+    return;
+  }
+
+  const lines = [
+    'INCOME BREAKDOWN',
+    `Total Income: ${formatMoney(total)}`,
+    '',
+    `Business Reinvestment (30%): ${formatMoney(total * 0.30)}`,
+    `Personal Needs (30%): ${formatMoney(total * 0.30)}`,
+    `Savings (20%): ${formatMoney(total * 0.20)}`,
+    `Adakavi (20%): ${formatMoney(total * 0.20)}`
+  ];
+  const text = lines.join('\n');
+
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById('statusMessage').textContent = 'Breakdown copied to clipboard.';
+  } catch (error) {
+    const temporary = document.createElement('textarea');
+    temporary.value = text;
+    temporary.style.position = 'fixed';
+    temporary.style.opacity = '0';
+    document.body.appendChild(temporary);
+    temporary.select();
+    const copied = document.execCommand('copy');
+    temporary.remove();
+    document.getElementById('statusMessage').textContent = copied
+      ? 'Breakdown copied to clipboard.'
+      : 'Copy was blocked by your browser. You can use Print / Save PDF instead.';
+  }
+});
+
+document.getElementById('printBtn').addEventListener('click', () => {
+  const rawValue = Number(incomeInput.value);
+  if (!Number.isFinite(rawValue) || rawValue <= 0) {
+    document.getElementById('statusMessage').textContent = 'Enter an income amount before printing.';
+    incomeInput.focus();
+    return;
+  }
+  window.print();
+});
+
+updateBreakdown();
+
+  
+  </script>
+</body>
+</html>
